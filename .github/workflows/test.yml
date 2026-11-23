@@ -29,13 +29,13 @@ jobs:
         run: pytest -q --cov=key_extract --cov-report=term-missing
 
       - name: Doctor runs without a network
-        run: key-extract doctor
+        run: polarity doctor
 
       - name: The shipped sample data still parses
         # E-9 is deliberately self-contradictory, so a non-zero exit is expected;
         # what matters is that nothing fails to parse.
         run: |
-          key-extract extract -i data/sample_expressions.csv -o /tmp/ci-out || true
+          polarity extract -i data/sample_expressions.csv -o /tmp/ci-out || true
           python -c "
           import json, sys
           report = json.load(open('/tmp/ci-out/full_report.json'))

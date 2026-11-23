@@ -88,7 +88,7 @@ def write_excel(results: Sequence[Extraction], path: Path) -> None:
         from openpyxl.styles import Alignment, Font, PatternFill
     except ImportError as exc:
         raise ImportError(
-            "Excel output needs openpyxl - run: pip install 'key-extract[excel]'"
+            "Excel output needs openpyxl - run: pip install 'polarity[excel]'"
         ) from exc
 
     path.parent.mkdir(parents=True, exist_ok=True)

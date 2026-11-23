@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "key-extract"
+name = "polarity"
 version = "1.0.0"
 description = "Parses classification expressions into an AST and extracts keywords with sound inclusion/exclusion polarity, with a semantic diff between two versions"
 readme = "README.md"
@@ -27,7 +27,7 @@ dev = [
 ]
 
 [project.scripts]
-key-extract = "key_extract.cli:main"
+polarity = "key_extract.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/key_extract"]

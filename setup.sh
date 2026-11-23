@@ -267,10 +267,10 @@ Setup complete.
 
   source .venv/bin/activate
 
-  key-extract doctor
-  key-extract extract 'category:kitchen AND (knife OR blade) AND NOT "butter knife"'
-  key-extract diff 'knife AND NOT "bk"' 'knife AND "bk"'
-  key-extract extract -i data/sample_expressions.csv -o out/
+  polarity doctor
+  polarity extract 'category:kitchen AND (knife OR blade) AND NOT "butter knife"'
+  polarity diff 'knife AND NOT "bk"' 'knife AND "bk"'
+  polarity extract -i data/sample_expressions.csv -o out/
 
 Both commands exit non-zero on a problem, so they work as pre-commit hooks.
 NOT distributes by De Morgan: NOT (a OR b) forbids both terms, NOT (a AND b) only the pair.

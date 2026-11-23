@@ -1,8 +1,8 @@
-# KeyExtract — Technical Architecture
+# Polarity — Technical Architecture
 
 ## Overview
 
-KeyExtract parses classification expressions — boolean rules over keywords — into an AST, then reports for each keyword what its presence means for whether the rule matches. It also compares two versions of an expression and names the changes a keyword-list diff cannot see.
+Polarity parses classification expressions — boolean rules over keywords — into an AST, then reports for each keyword what its presence means for whether the rule matches. It also compares two versions of an expression and names the changes a keyword-list diff cannot see.
 
 **Design principle:** polarity is a property of a keyword's position in the tree, not of the text around it. Everything interesting in this codebase follows from taking that seriously, including the two bugs that came from not taking it seriously enough at first.
 
@@ -12,7 +12,7 @@ KeyExtract parses classification expressions — boolean rules over keywords —
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────┐
-│                            CLI (key-extract)                                  │
+│                            CLI (polarity)                                  │
 │                                                                              │
 │  ┌────────────────────┐  ┌────────────────────┐  ┌────────────────────────┐ │
 │  │ extract            │  │ diff               │  │ doctor                 │ │
@@ -115,7 +115,7 @@ KeyExtract parses classification expressions — boolean rules over keywords —
 
 ### 1. CLI (`cli.py`)
 
-Three commands. Entry point `key-extract`.
+Three commands. Entry point `polarity`.
 
 | Command | Purpose |
 |:--|:--|
@@ -277,7 +277,7 @@ The lesson worth keeping: **an unreachable branch is worth probing before deleti
 ## Data Flow
 
 ```
-1.  key-extract extract -i rules.csv -o out/
+1.  polarity extract -i rules.csv -o out/
 2.  CLI drops None overrides -> Settings(output_dir=out/, provider="parser", ...)
 3.  load_expressions() -> [(id, expression)]; blank rows skipped
 4.  per expression: get_provider("parser").extract(text)
@@ -350,11 +350,11 @@ bash setup.sh --bedrock --excel
 bash setup.sh --all
 source .venv/bin/activate
 
-key-extract doctor
-key-extract extract 'category:kitchen AND (knife OR blade) AND NOT "butter knife"'
-key-extract extract -i data/sample_expressions.csv -o out/ --tree
-key-extract diff 'knife AND NOT "bk"' 'knife AND "bk"'
-key-extract extract -i rules.csv -o out/ --format excel --ok-only
+polarity doctor
+polarity extract 'category:kitchen AND (knife OR blade) AND NOT "butter knife"'
+polarity extract -i data/sample_expressions.csv -o out/ --tree
+polarity diff 'knife AND NOT "bk"' 'knife AND "bk"'
+polarity extract -i rules.csv -o out/ --format excel --ok-only
 ```
 
 `setup.sh` does more than install. It reports provider availability, then asserts: six fixed polarity cases including both De Morgan forms; agreement with a brute-force truth table over ~1,400 generated expressions; that a flip is one change and not two; that equivalent re-grouping is silent; that a duplicate keyword does not collapse; that a contradiction is reported; that a cosmetic retype is classified as such; and that the shipped sample data parses with exactly one contradiction and a differing De Morgan pair.

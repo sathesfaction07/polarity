@@ -124,7 +124,7 @@ class BedrockProvider(_LLMProvider):
     def unavailable_reason(cls) -> str:
         if cls.is_available():
             return ""
-        return "boto3 is not installed - run: pip install 'key-extract[bedrock]'"
+        return "boto3 is not installed - run: pip install 'polarity[bedrock]'"
 
     def _complete(self, expression: str) -> str | None:
         try:
@@ -172,7 +172,7 @@ class VertexProvider(_LLMProvider):
     def unavailable_reason(cls) -> str:
         if cls.is_available():
             return ""
-        return "google-cloud-aiplatform is not installed - run: pip install 'key-extract[vertex]'"
+        return "google-cloud-aiplatform is not installed - run: pip install 'polarity[vertex]'"
 
     def _complete(self, expression: str) -> str | None:
         try:

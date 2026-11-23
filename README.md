@@ -1,4 +1,4 @@
-# KeyExtract
+# Polarity
 
 Parses classification expressions into an AST and reports, for each keyword, what its presence actually means for the rule — required, optional, excluded, or conditional. Also diffs two versions of an expression and names the changes that a keyword-list comparison cannot see.
 
@@ -68,7 +68,7 @@ An item containing `a` but not `b` still satisfies `NOT (a AND b)`. Calling `a` 
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                          CLI (key-extract)                               │
+│                          CLI (polarity)                               │
 │                                                                         │
 │   extract                    diff                    doctor             │
 │   one expression or a file   two versions, with      providers,         │
@@ -146,19 +146,19 @@ bash setup.sh --all
 source .venv/bin/activate
 
 # What can this machine use, and what does the grammar accept?
-key-extract doctor
+polarity doctor
 
 # One expression
-key-extract extract 'category:kitchen AND (knife OR blade) AND NOT "butter knife"'
+polarity extract 'category:kitchen AND (knife OR blade) AND NOT "butter knife"'
 
 # A file of rules; exits 1 on any parse error or contradiction
-key-extract extract -i data/sample_expressions.csv -o out/
+polarity extract -i data/sample_expressions.csv -o out/
 
 # Compare two versions
-key-extract diff 'knife AND NOT "butter knife"' 'knife AND "butter knife"'
+polarity diff 'knife AND NOT "butter knife"' 'knife AND "butter knife"'
 
 # Excel, or only the rows that parsed (the report keeps everything)
-key-extract extract -i rules.csv -o out/ --format excel --ok-only
+polarity extract -i rules.csv -o out/ --format excel --ok-only
 ```
 
 Observed output for the single expression above:

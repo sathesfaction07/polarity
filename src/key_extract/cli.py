@@ -64,7 +64,7 @@ def _installed_version() -> str:
     from importlib.metadata import PackageNotFoundError, version
 
     try:
-        return version("key-extract")
+        return version("polarity")
     except PackageNotFoundError:
         return __version__
 
