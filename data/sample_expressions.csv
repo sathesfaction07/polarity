@@ -1,0 +1,11 @@
+id,expression,note
+E-1,knife AND blade,both required
+E-2,knife OR blade OR shears,alternatives
+E-3,"knife AND NOT ""butter knife""",a genuine exclusion
+E-4,"NOT (knife OR blade)",De Morgan over OR: both excluded
+E-5,"NOT (knife AND blade)",De Morgan over AND: only the pair excluded
+E-6,category:kitchen AND (price:high OR premium),fielded terms
+E-7,tit* AND NOT titanium,wildcard beside a longer literal
+E-8,"knife AND (blade OR edge) AND NOT ""safety knife""",mixed nesting
+E-9,knife AND NOT knife,self-contradictory
+E-10,"catégorie:coutellerie AND NOT ""couteau à beurre""",accented and multi-word

@@ -1,0 +1,45 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install
+        run: pip install -e ".[dev,excel]"
+
+      - name: Lint
+        run: ruff check src tests
+
+      - name: Test
+        run: pytest -q --cov=key_extract --cov-report=term-missing
+
+      - name: Doctor runs without a network
+        run: key-extract doctor
+
+      - name: The shipped sample data still parses
+        # E-9 is deliberately self-contradictory, so a non-zero exit is expected;
+        # what matters is that nothing fails to parse.
+        run: |
+          key-extract extract -i data/sample_expressions.csv -o /tmp/ci-out || true
+          python -c "
+          import json, sys
+          report = json.load(open('/tmp/ci-out/full_report.json'))
+          assert report['summary']['errors'] == 0, report['summary']
+          assert report['summary']['contradictions'] == 1, report['summary']
+          print('sample data:', report['summary'])
+          "
