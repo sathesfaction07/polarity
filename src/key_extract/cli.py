@@ -6,6 +6,7 @@ from pathlib import Path
 
 import click
 
+from . import __version__
 from .config import Settings
 from .core.diff import diff_expressions
 from .core.extract import extract as parser_extract
@@ -57,8 +58,19 @@ def _run(expression: str, settings: Settings) -> Extraction:
     return result
 
 
+def _installed_version() -> str:
+    """The installed distribution's version, or the source tree's when running uninstalled
+    (`click.version_option(package_name=...)` raises in that case instead of answering)."""
+    from importlib.metadata import PackageNotFoundError, version
+
+    try:
+        return version("key-extract")
+    except PackageNotFoundError:
+        return __version__
+
+
 @click.group()
-@click.version_option(package_name="key-extract")
+@click.version_option(version=_installed_version())
 def main() -> None:
     """Parse classification expressions and extract keywords with their polarity."""
 
