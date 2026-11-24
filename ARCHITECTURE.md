@@ -173,7 +173,7 @@ See Comparing Two Versions below and ADR-002.
 
 **`ParserProvider`** is the default and is not a fallback for something better. Once an expression parses, extraction is exact — there is no judgement left for a model to contribute.
 
-**`BedrockProvider` / `VertexProvider`** are deliberately narrow. This portfolio already contains four projects with a local-plus-hosted-model backend, so that pattern is not the contribution here. The hosted path exists for input the grammar rejects: a dialect with an unknown operator, or syntax mangled by a round trip through a spreadsheet.
+**`BedrockProvider` / `VertexProvider`** are deliberately narrow. Four sibling projects already have a local-plus-hosted-model backend, so that pattern is not the contribution here. The hosted path exists for input the grammar rejects: a dialect with an unknown operator, or syntax mangled by a round trip through a spreadsheet.
 
 Three safeguards on that path:
 
